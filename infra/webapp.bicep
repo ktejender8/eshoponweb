@@ -2,14 +2,11 @@ param webAppName string = uniqueString(resourceGroup().id) // Generate unique St
 param sku string = 'B1' // The SKU of App Service Plan
 param location string = 'centralus'
 
-var appServicePlanName = 'ASP-RGHexagonAZ4005-822e'
+var appServicePlanName = toLower('ASP-RGHexagonAZ4005-822e')
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appServicePlanName
   location: location
-  properties: {
-    reserved: true
-  }
   sku: {
     name: sku
   }
@@ -21,7 +18,7 @@ resource appService 'Microsoft.Web/sites@2022-09-01' = {
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
-      linuxFxVersion: 'DOTNETCORE|8.0'
+      windowsFxVersion: 'DOTNETCORE|8.0'
       appSettings: [
         {
           name: 'ASPNETCORE_ENVIRONMENT'
